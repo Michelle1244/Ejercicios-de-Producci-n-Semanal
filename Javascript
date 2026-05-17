@@ -1,0 +1,142 @@
+const selectDiasProduccion = document.getElementById("id-select-dias")
+const btnCargarProduccion = document.getElementById("id-btn-cargar-produccion")
+const btnPresentar = document.getElementById("id-btn-presentar-produccion")
+const txtPresentarProduccion = document.getElementById("id-listado-produccion")
+
+let vectorProduccion = []
+const diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+
+btnCargarProduccion.addEventListener("click", function(e){
+    const dimension = selectDiasProduccion.value
+    vectorProduccion = []
+    cargarProduccion(dimension)
+})
+
+function cargarProduccion(dimension){
+    for (let i = 0; i < dimension; i++){
+        const numAleatorio = Math.ceil (Math.random()  * 1000)
+        vectorProduccion[i] = numAleatorio;
+    }
+}
+
+btnPresentar.addEventListener("click", function(e){
+    txtPresentarProduccion.value = vectorProduccion.join(",")
+})
+
+//Ejercicio 1
+const btnTotalProduccion = document.getElementById("id-btn-total-produccion")
+const txtTotalProduccion = document.getElementById("id-txt-total-produccion")
+
+btnTotalProduccion.addEventListener("click", function(e){
+    let suma = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        suma = suma + vectorProduccion[i]
+    }
+    txtTotalProduccion.value = "Producción total: " + suma
+})
+
+//Ejercicio 2
+const btnMayorProduccion = document.getElementById("id-btn-mayor-produccion")
+const txtMayorProduccion = document.getElementById("id-txt-mayor-produccion")
+
+btnMayorProduccion.addEventListener("click", function(e){
+    const indice = mayorProduccion()
+    const mayor = vectorProduccion[indice]
+    const dia = diasSemana[indice]
+    txtMayorProduccion.value = " Dia: " + dia + " valor: " + mayor
+})
+
+
+function mayorProduccion (){
+    let mayor = 0
+    let index = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        const produccion = vectorProduccion[i]
+        if (produccion > mayor){
+            mayor = produccion
+            index = i
+        }
+    }
+    return index
+}
+
+//Ejercicio 3
+const btnMenorProduccion = document.getElementById("id-btn-menor-produccion")
+const txtMenorProduccion = document.getElementById("id-txt-menor-produccion")
+
+btnMenorProduccion.addEventListener("click", function(){
+    let menor = vectorProduccion[0]
+    let indice = 0
+    for(let i = 1; i < vectorProduccion.length; i++){
+        if(vectorProduccion[i] < menor){
+            menor = vectorProduccion[i]
+            indice = i
+        }
+    }
+    txtMenorProduccion.value = "Dia: " + diasSemana[indice] + " valor: " + menor
+})
+
+//Ejercicio 4
+const btnPromedioProduccion = document.getElementById("id-btn-promedio-produccion")
+const txtPromedioProduccion = document.getElementById("id-txt-promedio-produccion")
+
+btnPromedioProduccion.addEventListener("click", function(){
+    let suma = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        suma = suma + vectorProduccion[i]
+    }
+    let promedio = suma / vectorProduccion.length
+    txtPromedioProduccion.value = "Promedio semanal: " + promedio
+})
+
+//Ejercicio 5
+const btnDiasSuperiores = document.getElementById("id-btn-dias-superiores")
+const txtDiasSuperiores = document.getElementById("id-txt-dias-superiores")
+
+btnDiasSuperiores.addEventListener("click", function(){
+    let suma = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        suma = suma + vectorProduccion[i]
+    }
+    let promedio = suma / vectorProduccion.length
+
+    let contador = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        if(vectorProduccion[i] > promedio){
+            contador = contador + 1
+        }
+    }
+    txtDiasSuperiores.value = "Días superior prom: " + contador
+})
+
+//Ejercicio 6
+const btnProduccionCritica = document.getElementById("id-btn-produccion-critica")
+const txtProduccionCritica = document.getElementById("id-txt-produccion-critica")
+
+btnProduccionCritica.addEventListener("click", function(){
+    let contador = 0
+    for(let i = 0; i < vectorProduccion.length; i++){
+        if(vectorProduccion[i] < 100){
+            contador = contador + 1
+        }
+    }
+    txtProduccionCritica.value = "Días producción crítica: " + contador
+})
+
+//Ejercicio 7
+const btnProduccionRepetida = document.getElementById("id-btn-produccion-repetida")
+const txtProduccionRepetida = document.getElementById("id-txt-produccion-repetida")
+
+btnProduccionRepetida.addEventListener("click", function(){
+    let mensaje = "No existen" 
+
+    for(let i = 0; i < vectorProduccion.length; i++){
+        for(let j = i+1; j < vectorProduccion.length; j++){
+            if(vectorProduccion[i] === vectorProduccion[j]){
+                mensaje = "Si existen"
+            }
+        }
+    }
+
+    txtProduccionRepetida.value = mensaje
+})
